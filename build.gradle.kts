@@ -39,7 +39,7 @@ dependencies {
     implementation("me.paulschwarz:spring-dotenv:4.0.0")
 
     //Swagger
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.0.2")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.7.0")
 
     // Jwt
     compileOnly("io.jsonwebtoken:jjwt-api:0.12.6")
