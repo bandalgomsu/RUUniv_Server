@@ -1,4 +1,4 @@
-package com.ruuniv.common.entity
+package com.ruuniv.infrastricture.database
 
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate

@@ -1,9 +1,9 @@
 package com.ruuniv.infrastricture.database.users
 
-import com.ruuniv.infrastricture.database.users.entities.User
+import com.ruuniv.infrastricture.database.users.entities.UserEntity
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 
-interface UserCoroutineRepository : CoroutineCrudRepository<User, Long> {
+interface UserCoroutineRepository : CoroutineCrudRepository<UserEntity, Long> {
 
-    suspend fun findByEmail(email: String): User?
+    suspend fun findByEmail(email: String): UserEntity?
 }

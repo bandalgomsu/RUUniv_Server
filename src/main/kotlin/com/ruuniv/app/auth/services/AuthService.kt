@@ -1,4 +1,4 @@
-package com.ruuniv.app.auth.service
+package com.ruuniv.app.auth.services
 
 import JwtToken
 import com.ruuniv.app.auth.dto.AuthRequest
@@ -9,7 +9,7 @@ import com.ruuniv.common.security.jwt.JwtService
 import com.ruuniv.common.util.MailValidator
 import com.ruuniv.infrastricture.database.users.UserCoroutineRepository
 import com.ruuniv.infrastricture.database.users.entities.Role
-import com.ruuniv.infrastricture.database.users.entities.User
+import com.ruuniv.infrastricture.database.users.entities.UserEntity
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.reactor.awaitSingle
@@ -28,15 +28,15 @@ class AuthService(
     suspend fun signUp(request: AuthRequest.SignUpRequest): AuthResponse.TokenResponse = coroutineScope {
         MailValidator.validateEmail(email = request.email)
         async { checkIsDuplicatedEmail(email = request.email) }.await()
-        
-        val user: User =
-            User(
+
+        val user: UserEntity =
+            UserEntity(
                 email = request.email,
                 password = passwordEncoder.encode(request.password),
                 role = Role.USER
             )
 
-        val savedUser: User = userRepository.save(user)
+        val savedUser: UserEntity = userRepository.save(user)
 
         createToken(savedUser.email)
     }
@@ -49,7 +49,7 @@ class AuthService(
     }
 
     suspend fun login(request: AuthRequest.LoginRequest): AuthResponse.TokenResponse = coroutineScope {
-        val user: User =
+        val user: UserEntity =
             userRepository.findByEmail(request.email) ?: throw BusinessException(AuthErrorCode.NOT_EXIST_USER)
 
         if (!passwordEncoder.matches(request.password, user.password)) {
