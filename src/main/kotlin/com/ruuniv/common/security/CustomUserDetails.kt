@@ -1,12 +1,12 @@
 package com.ruuniv.common.security
 
-import com.ruuniv.infrastricture.database.users.entities.User
+import com.ruuniv.infrastricture.database.users.entities.UserEntity
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class CustomUserDetails(
-    private val user: User
+    private val user: UserEntity
 ) : UserDetails {
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf(SimpleGrantedAuthority(user.role.toString()))

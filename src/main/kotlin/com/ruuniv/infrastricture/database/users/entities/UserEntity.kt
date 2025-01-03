@@ -1,11 +1,11 @@
 package com.ruuniv.infrastricture.database.users.entities
 
-import com.ruuniv.common.entity.BaseEntity
+import com.ruuniv.infrastricture.database.BaseEntity
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 
 @Table("users")
-class User(
+class UserEntity(
     @Id
     var id: Long? = null,
     var email: String,

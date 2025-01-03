@@ -1,8 +1,8 @@
-package com.ruuniv.app.auth.controller
+package com.ruuniv.app.auth.controllers
 
 import com.ruuniv.app.auth.dto.AuthRequest
 import com.ruuniv.app.auth.dto.AuthResponse
-import com.ruuniv.app.auth.service.AuthService
+import com.ruuniv.app.auth.services.AuthService
 import io.swagger.v3.oas.annotations.Hidden
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
