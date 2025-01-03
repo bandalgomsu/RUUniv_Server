@@ -19,4 +19,15 @@ class UserEntityRepository(
             )
         }
     }
+
+    override suspend fun read(email: String): User? = coroutineScope {
+        repository.findByEmail(email)?.let {
+            User(
+                id = it.id,
+                email = it.email,
+                password = it.password,
+                role = it.role,
+            )
+        }
+    }
 }
