@@ -1,0 +1,46 @@
+spring:
+  r2dbc:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+  mail:
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    host: smtp.gmail.com
+    port: 587
+
+management:
+  health:
+    db:
+      enabled: false
+    redis:
+      enabled: false
+
+logging:
+  level:
+    org.springframework.r2dbc.core: debug
+
+jwt:
+  key: ${JWT_KEY}
+  exp:
+    access: ${ACCESS_EXP}
+    refresh: ${REFRESH_EXP}
+
+server:
+  port: 8081
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/swagger-ui.html
+    operationsSorter: method
+    disable-swagger-default-url: true
+    display-request-duration: true
+  api-docs:
+    path: /swagger-ui/api-docs
+  show-actuator: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
