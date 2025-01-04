@@ -14,4 +14,8 @@ class ApiKeyReader(
     suspend fun read(apiKey: String): ApiKey = coroutineScope {
         apiKeyRepository.read(apiKey) ?: throw BusinessException(ApiKeyErrorCode.NOT_EXISTS_API_KEY)
     }
+
+    suspend fun readAll(userId: Long): List<ApiKey> = coroutineScope {
+        apiKeyRepository.readAll(userId)
+    }
 }
