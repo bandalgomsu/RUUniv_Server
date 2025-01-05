@@ -16,9 +16,17 @@ class MailVerifier(
     suspend fun verify(email: String, inputAuthNumber: String, redisKey: RedisKey): Boolean = coroutineScope {
         MailValidator.validateEmail(email)
 
-        val authNumber = redisClient.getData(redisKey.combine(email), String::class)
+        val key = redisKey.combine(email)
+
+        val authNumber = redisClient.getData(key, String::class)
             ?: throw BusinessException(MailErrorCode.NOT_EXISTS_AUTH_NUMBER)
 
-        authNumber == inputAuthNumber
+        if (authNumber == inputAuthNumber) {
+            redisClient.deleteData(key)
+
+            return@coroutineScope true
+        }
+
+        return@coroutineScope false
     }
 }
