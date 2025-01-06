@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.server.ServerWebExchange
 
 @Tag(name = "학생 인증", description = "학생 인증을 관리합니다")
 @RestController
@@ -33,10 +34,14 @@ class StudentVerificationController(
     @Operation(summary = "학생 인증 번호 검증", description = "학생 인증 메일을 검증 합니다")
     suspend fun verifyStudentVerificationAuthNumber(
         @RequestBody request: StudentVerificationRequest.VerifyStudentVerificationAuthNumberRequest,
-        @RequestBody apiKeyId: Long
+        exchange: ServerWebExchange
     ): ResponseEntity<StudentVerificationResponse.StudentVerifyResponse> = coroutineScope {
         val response =
-            studentVerificationService.verifyStudentVerificationAuthNumber(request.email, request.authNumber, apiKeyId)
+            studentVerificationService.verifyStudentVerificationAuthNumber(
+                request.email,
+                request.authNumber,
+                exchange.getAttribute<Long>("ApiKey")!!
+            )
 
         return@coroutineScope ResponseEntity.ok(response)
     }
