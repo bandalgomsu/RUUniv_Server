@@ -14,20 +14,32 @@ class SwaggerConfig {
     @Bean
     fun openAPI(): OpenAPI {
         val jwt = "JWT"
-        val securityRequirement = SecurityRequirement().addList(jwt)
-        val components = Components().addSecuritySchemes(
-            jwt, SecurityScheme()
-                .name(jwt)
-                .type(SecurityScheme.Type.HTTP)
-                .scheme("bearer")
-                .bearerFormat("JWT")
-        )
+        val apiKey = "ApiKey"
+
+        val securityRequirement = SecurityRequirement()
+            .addList(jwt)
+            .addList(apiKey)
+
+        val components = Components()
+            .addSecuritySchemes(
+                jwt, SecurityScheme()
+                    .name(jwt)
+                    .type(SecurityScheme.Type.HTTP)
+                    .scheme("bearer")
+                    .bearerFormat("JWT")
+            )
+            .addSecuritySchemes(
+                apiKey, SecurityScheme()
+                    .name(apiKey)
+                    .type(SecurityScheme.Type.APIKEY)
+                    .`in`(SecurityScheme.In.HEADER)
+            )
+
         return OpenAPI()
             .addServersItem(Server().url("/"))
-            .components(Components())
+            .components(components) // components 한 번만 추가
             .info(apiInfo())
             .addSecurityItem(securityRequirement)
-            .components(components)
     }
 
     private fun apiInfo(): Info {
@@ -37,4 +49,5 @@ class SwaggerConfig {
             .version("1.0.0") // API의 버전
     }
 }
+
 

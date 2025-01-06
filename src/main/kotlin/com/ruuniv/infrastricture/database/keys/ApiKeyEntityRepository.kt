@@ -6,10 +6,12 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Repository
+import reactor.core.publisher.Mono
 
 @Repository
 class ApiKeyEntityRepository(
-    private val repository: ApiKeyCoroutineRepository
+    private val repository: ApiKeyCoroutineRepository,
+    private val reactiveRepository: ApiKeyReactiveRepository,
 ) : ApiKeyRepository {
 
     override suspend fun add(apiKey: ApiKey): Unit = coroutineScope {
@@ -37,6 +39,18 @@ class ApiKeyEntityRepository(
                 id = it.id,
                 apiKey = it.apiKey,
                 userId = it.userId,
+            )
+        }
+    }
+
+    override fun readMono(apiKey: String): Mono<ApiKey> {
+        return reactiveRepository.findByApiKey(apiKey).flatMap {
+            Mono.justOrEmpty(
+                ApiKey(
+                    id = it.id,
+                    userId = it.userId,
+                    apiKey = it.apiKey,
+                )
             )
         }
     }
