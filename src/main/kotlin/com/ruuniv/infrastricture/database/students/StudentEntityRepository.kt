@@ -12,35 +12,10 @@ class StudentEntityRepository(
     private val repository: StudentCoroutineRepository
 ) : StudentRepository {
 
-    override suspend fun read(userId: Long, apiKeyId: Long): Student? = coroutineScope {
-        repository.findByUserIdAndApiKeyId(userId, apiKeyId)?.let {
-            Student(
-                id = it.id,
-                userId = it.userId,
-                apiKeyId = it.apiKeyId,
-                email = it.email,
-                universityName = it.universityName
-            )
-        }
-    }
-
-    override suspend fun readAllByUserId(userId: Long): List<Student> = coroutineScope {
-        repository.findAllByUserId(userId).map {
-            Student(
-                id = it.id,
-                userId = it.userId,
-                apiKeyId = it.apiKeyId,
-                email = it.email,
-                universityName = it.universityName
-            )
-        }.toList()
-    }
-
     override suspend fun readAllByApiKeyId(apiKeyId: Long): List<Student> = coroutineScope {
         repository.findAllByApiKeyId(apiKeyId).map {
             Student(
                 id = it.id,
-                userId = it.userId,
                 apiKeyId = it.apiKeyId,
                 email = it.email,
                 universityName = it.universityName
@@ -51,7 +26,6 @@ class StudentEntityRepository(
     override suspend fun add(student: Student) {
         repository.save(
             StudentEntity(
-                userId = student.userId,
                 apiKeyId = student.apiKeyId,
                 email = student.email,
                 universityName = student.universityName
