@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ServerWebExchange
 
-@Tag(name = "학생 인증", description = "학생 인증을 관리합니다")
+@Tag(name = "학생_인증")
 @RestController
 @RequestMapping("/api/v1/student/verification")
 class StudentVerificationController(

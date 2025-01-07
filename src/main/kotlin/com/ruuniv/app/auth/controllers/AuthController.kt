@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "인증", description = "인증 정보를 관리 합니다")
+@Tag(name = "회원_인증")
 @RestController
 class AuthController(
     private val authService: AuthService,
