@@ -10,8 +10,13 @@ class ApiKeyWriter(
     private val apiKeyRepository: ApiKeyRepository
 ) {
 
-    suspend fun add(apiKey: ApiKey) = coroutineScope {
-        apiKeyRepository.add(apiKey)
+    suspend fun add(apiKey: String, userId: Long) = coroutineScope {
+        apiKeyRepository.add(
+            ApiKey(
+                apiKey = apiKey,
+                userId = userId,
+            )
+        )
     }
 
     suspend fun delete(apiKeyId: Long, userId: Long) = coroutineScope {
