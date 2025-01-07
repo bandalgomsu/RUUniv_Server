@@ -1,7 +1,6 @@
 package com.ruuniv.app.keys.service
 
 import com.ruuniv.app.keys.implement.ApiKeyWriter
-import com.ruuniv.app.keys.model.ApiKey
 import com.ruuniv.common.util.UUIDGenerator
 import kotlinx.coroutines.coroutineScope
 import org.springframework.stereotype.Service
@@ -13,13 +12,8 @@ class ApiKeyCommandService(
 ) {
 
     @Transactional
-    suspend fun createApiKey(userId: Long, apiKeyValue: String = UUIDGenerator.generateUUID()) = coroutineScope {
-        val apiKey = ApiKey(
-            apiKey = apiKeyValue,
-            userId = userId
-        )
-
-        apiKeyWriter.add(apiKey)
+    suspend fun createApiKey(apiKey: String = UUIDGenerator.generateUUID(), userId: Long) = coroutineScope {
+        apiKeyWriter.add(apiKey, userId)
     }
 
     @Transactional

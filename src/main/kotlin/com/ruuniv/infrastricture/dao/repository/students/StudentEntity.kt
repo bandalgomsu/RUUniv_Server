@@ -1,4 +1,4 @@
-package com.ruuniv.infrastricture.database.students
+package com.ruuniv.infrastricture.dao.repository.students
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column

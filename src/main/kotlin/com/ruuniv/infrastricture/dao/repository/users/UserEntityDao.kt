@@ -1,14 +1,14 @@
-package com.ruuniv.infrastricture.database.users
+package com.ruuniv.infrastricture.dao.repository.users
 
+import com.ruuniv.app.users.dao.UserDao
 import com.ruuniv.app.users.model.User
-import com.ruuniv.app.users.repositories.UserRepository
 import kotlinx.coroutines.coroutineScope
 import org.springframework.stereotype.Repository
 
 @Repository
-class UserEntityRepository(
+class UserEntityDao(
     private val repository: UserCoroutineRepository
-) : UserRepository {
+) : UserDao {
     override suspend fun read(userId: Long): User? = coroutineScope {
         repository.findById(userId)?.let {
             User(

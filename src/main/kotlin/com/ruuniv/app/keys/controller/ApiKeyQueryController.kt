@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "API KEY QUERY CONTROLLER", description = "API KEY QUERY CONTROLLER")
+@Tag(name = "API_KEY_조회")
 @RestController
 @RequestMapping("/api/v1/apiKeys")
 class ApiKeyQueryController(
