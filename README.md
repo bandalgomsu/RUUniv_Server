@@ -37,8 +37,9 @@
 ### Package Structure
 
 - app
-    - 각각의 도메인 패키지 및 외부 기술에 대한 인터페이스가 (Adapter) 존재하고 각 도메인 패키지는 Controller , Service , Implement , Dao 패키지로 구성될 수
+    - 각각의 도메인 패키지 및 외부 기술에 대한 인터페이스가 존재하고 각 도메인 패키지는 Controller , Service , Implement , Dao 패키지로 구성될 수
       있음
+    - Infrastructure 를 직접 의존할 수 없음 (추상화를 통해 의존해야함)
 - common
     - 공통 예외 처리 등 공통된 내부 기술 관리
 - Infrastructure
@@ -71,7 +72,7 @@
 - 계층별 CRUD 네이밍
 
   |   | Controller,Service | Implement ,  DataAccess |
-                |---|--------------------|-------------------------|
+                    |---|--------------------|-------------------------|
   | C | Create             | Add                     |
   | R | Get                | Read , Find             |
   | U | Update             | Update                  |
