@@ -1,6 +1,6 @@
-package com.ruuniv.infrastricture.database.users.entities
+package com.ruuniv.infrastricture.dao.repository.users.entities
 
-import com.ruuniv.infrastricture.database.BaseEntity
+import com.ruuniv.infrastricture.dao.repository.BaseEntity
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Table
 

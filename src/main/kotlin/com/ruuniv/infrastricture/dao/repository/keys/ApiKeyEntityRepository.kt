@@ -1,4 +1,4 @@
-package com.ruuniv.infrastricture.database.keys
+package com.ruuniv.infrastricture.dao.repository.keys
 
 import com.ruuniv.app.keys.model.ApiKey
 import com.ruuniv.app.keys.repository.ApiKeyRepository

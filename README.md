@@ -65,12 +65,12 @@
         - StudentProcessor
 - DataAccess
     - 데이터의 접근하여 엔티티를 얻는 계층으로 DB를 통해 접근하거나 Http를 통해 접근하는 등의 방법이 있음
-    - 네이밍 : Domain + DataAccessAdapter
+    - 네이밍 : Domain + Dao
 
 - 계층별 CRUD 네이밍
 
   |   | Controller,Service | Implement ,  DataAccess |
-        |---|--------------------|-------------------------|
+          |---|--------------------|-------------------------|
   | C | Create             | Add                     |
   | R | Get                | Read , Find             |
   | U | Update             | Update                  |

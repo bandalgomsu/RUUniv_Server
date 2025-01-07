@@ -7,9 +7,9 @@ import com.ruuniv.common.exception.BusinessException
 import com.ruuniv.common.security.exception.AuthErrorCode
 import com.ruuniv.common.security.jwt.JwtService
 import com.ruuniv.common.util.MailValidator
-import com.ruuniv.infrastricture.database.users.UserCoroutineRepository
-import com.ruuniv.infrastricture.database.users.entities.Role
-import com.ruuniv.infrastricture.database.users.entities.UserEntity
+import com.ruuniv.infrastricture.dao.repository.users.UserCoroutineRepository
+import com.ruuniv.infrastricture.dao.repository.users.entities.Role
+import com.ruuniv.infrastricture.dao.repository.users.entities.UserEntity
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.reactor.awaitSingle

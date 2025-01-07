@@ -2,7 +2,7 @@ package com.ruuniv.common.security
 
 import com.ruuniv.common.exception.BusinessException
 import com.ruuniv.common.security.exception.AuthErrorCode
-import com.ruuniv.infrastricture.database.users.UserReactiveRepository
+import com.ruuniv.infrastricture.dao.repository.users.UserReactiveRepository
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service

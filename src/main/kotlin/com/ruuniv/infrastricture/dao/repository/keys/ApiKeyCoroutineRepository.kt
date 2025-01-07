@@ -1,4 +1,4 @@
-package com.ruuniv.infrastricture.database.keys
+package com.ruuniv.infrastricture.dao.repository.keys
 
 import kotlinx.coroutines.flow.Flow
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository

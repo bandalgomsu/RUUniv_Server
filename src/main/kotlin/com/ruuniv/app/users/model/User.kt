@@ -1,6 +1,6 @@
 package com.ruuniv.app.users.model
 
-import com.ruuniv.infrastricture.database.users.entities.Role
+import com.ruuniv.infrastricture.dao.repository.users.entities.Role
 
 class User(
     val id: Long? = null,

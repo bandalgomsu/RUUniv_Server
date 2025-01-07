@@ -1,4 +1,4 @@
-package com.ruuniv.infrastricture.database.students
+package com.ruuniv.infrastricture.dao.repository.students
 
 import com.ruuniv.app.students.model.Student
 import com.ruuniv.app.students.repository.StudentRepository

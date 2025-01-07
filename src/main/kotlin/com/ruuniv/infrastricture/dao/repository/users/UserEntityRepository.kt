@@ -1,4 +1,4 @@
-package com.ruuniv.infrastricture.database.users
+package com.ruuniv.infrastricture.dao.repository.users
 
 import com.ruuniv.app.users.model.User
 import com.ruuniv.app.users.repositories.UserRepository

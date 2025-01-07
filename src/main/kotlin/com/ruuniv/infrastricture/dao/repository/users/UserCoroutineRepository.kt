@@ -1,6 +1,6 @@
-package com.ruuniv.infrastricture.database.users
+package com.ruuniv.infrastricture.dao.repository.users
 
-import com.ruuniv.infrastricture.database.users.entities.UserEntity
+import com.ruuniv.infrastricture.dao.repository.users.entities.UserEntity
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 
 interface UserCoroutineRepository : CoroutineCrudRepository<UserEntity, Long> {
