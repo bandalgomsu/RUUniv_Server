@@ -2,8 +2,8 @@ package com.ruuniv.common.filter
 
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.ruuniv.app.keys.dao.ApiKeyDao
 import com.ruuniv.app.keys.exception.ApiKeyErrorCode
-import com.ruuniv.app.keys.repository.ApiKeyRepository
 import com.ruuniv.common.exception.BusinessException
 import com.ruuniv.common.exception.CommonErrorCode
 import com.ruuniv.common.exception.ErrorResponse
@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets
 
 @Component
 class ApiKeyFilter(
-    private val apiKeyDataAccess: ApiKeyRepository,
+    private val apiKeyDataAccess: ApiKeyDao,
 ) : WebFilter {
     companion object {
         private const val API_KEY_HEADER = "ApiKey"

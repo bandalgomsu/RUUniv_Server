@@ -1,16 +1,16 @@
 package com.ruuniv.infrastricture.dao.repository.students
 
+import com.ruuniv.app.students.dao.StudentDao
 import com.ruuniv.app.students.model.Student
-import com.ruuniv.app.students.repository.StudentRepository
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Repository
 
 @Repository
-class StudentEntityRepository(
+class StudentEntityDao(
     private val repository: StudentCoroutineRepository
-) : StudentRepository {
+) : StudentDao {
 
     override suspend fun readAllByApiKeyId(apiKeyId: Long): List<Student> = coroutineScope {
         repository.findAllByApiKeyId(apiKeyId).map {

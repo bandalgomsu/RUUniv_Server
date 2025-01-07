@@ -1,7 +1,7 @@
 package com.ruuniv.infrastricture.dao.repository.keys
 
+import com.ruuniv.app.keys.dao.ApiKeyDao
 import com.ruuniv.app.keys.model.ApiKey
-import com.ruuniv.app.keys.repository.ApiKeyRepository
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository
 import reactor.core.publisher.Mono
 
 @Repository
-class ApiKeyEntityRepository(
+class ApiKeyEntityDao(
     private val repository: ApiKeyCoroutineRepository,
     private val reactiveRepository: ApiKeyReactiveRepository,
-) : ApiKeyRepository {
+) : ApiKeyDao {
 
     override suspend fun add(apiKey: ApiKey): Unit = coroutineScope {
         repository.save(

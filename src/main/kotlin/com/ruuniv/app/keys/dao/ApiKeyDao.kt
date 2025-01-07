@@ -1,9 +1,9 @@
-package com.ruuniv.app.keys.repository
+package com.ruuniv.app.keys.dao
 
 import com.ruuniv.app.keys.model.ApiKey
 import reactor.core.publisher.Mono
 
-interface ApiKeyRepository {
+interface ApiKeyDao {
     suspend fun add(apiKey: ApiKey)
     suspend fun read(apiKeyId: Long): ApiKey?
     suspend fun read(apiKey: String): ApiKey?
