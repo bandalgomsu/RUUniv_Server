@@ -3,11 +3,10 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-  flyway:
-    enabled: true
-    url: ${JDBC_URL}
-    user: ${JDBC_USERNAME}
-    password: ${JDBC_PASSWORD}
+  sql:
+    init:
+      mode: always
+      platform: r2dbc
   data:
     redis:
       host: ${REDIS_HOST}
@@ -27,12 +26,16 @@ management:
 
 logging:
   level:
-    org.springframework.r2dbc.core: error
+    org.springframework.r2dbc.core: debug
 
-riot:
-  api:
-    url: ${RIOT_API_URL}
-    key: ${RIOT_API_KEY}
+jwt:
+  key: ${JWT_KEY}
+  exp:
+    access: ${ACCESS_EXP}
+    refresh: ${REFRESH_EXP}
+
+server:
+  port: 8081
 
 springdoc:
   swagger-ui:
@@ -45,15 +48,3 @@ springdoc:
   show-actuator: true
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
-
-fcm:
-  key:
-    path: google-services.json
-jwt:
-  key: ${JWT_KEY}
-  exp:
-    access: ${ACCESS_EXP}
-    refresh: ${REFRESH_EXP}
-
-server:
-  port: 8081
