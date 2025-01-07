@@ -6,4 +6,6 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 interface ApiKeyCoroutineRepository : CoroutineCrudRepository<ApiKeyEntity, Long> {
     suspend fun findByApiKey(apiKey: String): ApiKeyEntity?
     suspend fun findAllByUserId(userId: Long): Flow<ApiKeyEntity>
+
+    suspend fun deleteByIdAndUserId(apiKeyId: Long, userId: Long)
 }
