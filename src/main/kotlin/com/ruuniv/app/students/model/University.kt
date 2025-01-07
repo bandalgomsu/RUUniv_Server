@@ -143,7 +143,7 @@ enum class University(
 
             return University.entries.firstOrNull {
                 domain.contains(it.domain)
-            } ?: throw BusinessException(UniversityErrorCode.NOT_MATCH_EMAIL)
+            } ?: throw BusinessException(UniversityErrorCode.NOT_SUPPORTED_UNIVERSITY)
         }
     }
 }
