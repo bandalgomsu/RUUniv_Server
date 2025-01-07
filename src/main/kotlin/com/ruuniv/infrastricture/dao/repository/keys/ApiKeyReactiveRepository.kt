@@ -1,4 +1,4 @@
-package com.ruuniv.infrastricture.database.keys
+package com.ruuniv.infrastricture.dao.repository.keys
 
 import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import reactor.core.publisher.Mono

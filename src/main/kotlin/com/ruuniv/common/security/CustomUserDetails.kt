@@ -1,6 +1,6 @@
 package com.ruuniv.common.security
 
-import com.ruuniv.infrastricture.database.users.entities.UserEntity
+import com.ruuniv.infrastricture.dao.repository.users.entities.UserEntity
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

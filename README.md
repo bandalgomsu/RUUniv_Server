@@ -37,7 +37,7 @@
 ### Package Structure
 
 - app
-    - 각각의 도메인 패키지 및 외부 기술에 대한 인터페이스가 (Adapter) 존재하고 각 도메인 패키지는 Controller , Service , Implement , DataAccess 패키지로 구성될 수
+    - 각각의 도메인 패키지 및 외부 기술에 대한 인터페이스가 (Adapter) 존재하고 각 도메인 패키지는 Controller , Service , Implement , Dao 패키지로 구성될 수
       있음
 - common
     - 공통 예외 처리 등 공통된 내부 기술 관리
@@ -65,12 +65,13 @@
         - StudentProcessor
 - DataAccess
     - 데이터의 접근하여 엔티티를 얻는 계층으로 DB를 통해 접근하거나 Http를 통해 접근하는 등의 방법이 있음
-    - 네이밍 : Domain + DataAccessAdapter
+    - 네이밍 : Domain + Dao (DB 뿐 아니라 Data 접근을 위한 모든 기술을 의미)
+    - 해당 Dao의 구현체는 Infrastructure 에서 구현 (DB, HttpClient 등등을 통해 구햔)
 
 - 계층별 CRUD 네이밍
 
   |   | Controller,Service | Implement ,  DataAccess |
-        |---|--------------------|-------------------------|
+                |---|--------------------|-------------------------|
   | C | Create             | Add                     |
   | R | Get                | Read , Find             |
   | U | Update             | Update                  |
