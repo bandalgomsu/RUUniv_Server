@@ -13,4 +13,8 @@ class ApiKeyWriter(
     suspend fun add(apiKey: ApiKey) = coroutineScope {
         apiKeyRepository.add(apiKey)
     }
+
+    suspend fun delete(apiKeyId: Long, userId: Long) = coroutineScope {
+        apiKeyRepository.delete(apiKeyId, userId)
+    }
 }

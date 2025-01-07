@@ -64,4 +64,8 @@ class ApiKeyEntityRepository(
             )
         }.toList()
     }
+
+    override suspend fun delete(apiKeyId: Long, userId: Long) {
+        repository.deleteByIdAndUserId(apiKeyId, userId)
+    }
 }

@@ -11,4 +11,6 @@ interface ApiKeyRepository {
     suspend fun readAll(userId: Long): List<ApiKey>
 
     fun readMono(apiKey: String): Mono<ApiKey>
+
+    suspend fun delete(apiKeyId: Long, userId: Long)
 }
