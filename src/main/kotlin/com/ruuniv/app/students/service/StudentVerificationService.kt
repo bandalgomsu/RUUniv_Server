@@ -7,7 +7,6 @@ import com.ruuniv.app.mail.dto.MailSenderRequest
 import com.ruuniv.app.students.dto.StudentVerificationResponse
 import com.ruuniv.app.students.implement.StudentReader
 import com.ruuniv.app.students.implement.StudentWriter
-import com.ruuniv.app.students.model.Student
 import com.ruuniv.app.students.model.University
 import com.ruuniv.common.util.MailValidator
 import com.ruuniv.common.util.RandomNumberGenerator
@@ -42,13 +41,7 @@ class StudentVerificationService(
         val university = University.createByEmail(email)
 
         if (isStudent) {
-            val student = Student(
-                apiKeyId = apiKeyId,
-                email = email,
-                universityName = university.universityName
-            )
-
-            studentWriter.add(student)
+            studentWriter.add(apiKeyId, email, university)
         }
 
         StudentVerificationResponse.StudentVerifyResponse(

@@ -20,7 +20,7 @@ class ApiKeyCommandController(
     @PostMapping("/me")
     suspend fun createApiKey(@AuthenticationPrincipal principal: CustomUserDetails): ResponseEntity<Void> =
         coroutineScope {
-            apiKeyCommandService.createApiKey(principal.getId())
+            apiKeyCommandService.createApiKey(userId = principal.getId())
 
             return@coroutineScope ResponseEntity.ok().build()
         }
