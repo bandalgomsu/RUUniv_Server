@@ -6,6 +6,7 @@ import com.ruuniv.app.keys.dao.ApiKeyDao
 import com.ruuniv.app.keys.exception.ApiKeyErrorCode
 import com.ruuniv.common.exception.BusinessException
 import com.ruuniv.common.exception.CommonErrorCode
+import com.ruuniv.common.exception.ErrorCode
 import com.ruuniv.common.exception.ErrorResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -38,7 +39,10 @@ class ApiKeyFilter(
         }
 
         val apiKey = exchange.request.headers.getFirst(API_KEY_HEADER)
-            ?: return Mono.error(BusinessException(CommonErrorCode.INVALID_INPUT_VALUE))
+        
+        if (apiKey.isNullOrEmpty()) {
+            return setErrorResponse(exchange, CommonErrorCode.INVALID_INPUT_VALUE)
+        }
 
         return apiKeyDataAccess.readMono(apiKey)
             .switchIfEmpty(Mono.error(RuntimeException()))
@@ -46,20 +50,20 @@ class ApiKeyFilter(
                 exchange.attributes[API_KEY_HEADER] = it.id
                 chain.filter(exchange)
             }
-            .onErrorResume { setErrorResponse(exchange) }
+            .onErrorResume { setErrorResponse(exchange, ApiKeyErrorCode.NOT_EXISTS_API_KEY) }
     }
 
-    fun setErrorResponse(exchange: ServerWebExchange): Mono<Void> {
+    fun setErrorResponse(exchange: ServerWebExchange, errorCode: ErrorCode): Mono<Void> {
         val serverHttpResponse: ServerHttpResponse = exchange.response
         serverHttpResponse.headers.contentType = MediaType.APPLICATION_JSON
         serverHttpResponse.setStatusCode(HttpStatus.UNAUTHORIZED)
 
         return try {
             val body: String = ObjectMapper()
-                .writeValueAsString(ErrorResponse(ApiKeyErrorCode.NOT_EXISTS_API_KEY))
+                .writeValueAsString(ErrorResponse(errorCode))
             val bytes: ByteArray = body.toByteArray(StandardCharsets.UTF_8)
             val wrap = serverHttpResponse.bufferFactory().wrap(bytes)
-            logger.error("NOT_EXIST_API_KEY")
+            logger.error("{}", errorCode.getCodeValue())
 
             serverHttpResponse.writeWith(Mono.just(wrap))
         } catch (e: JsonProcessingException) {
