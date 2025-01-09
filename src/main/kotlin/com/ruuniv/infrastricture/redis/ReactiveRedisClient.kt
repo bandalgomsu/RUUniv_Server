@@ -1,5 +1,6 @@
 package com.ruuniv.infrastricture.redis
 
+import com.ruuniv.common.redis.RedisClient
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
@@ -9,28 +10,28 @@ import java.time.Duration
 import kotlin.reflect.KClass
 
 @Component
-class RedisClient(
+class ReactiveRedisClient(
     private val redisTemplate: ReactiveRedisTemplate<String, Any>
-) {
-    suspend fun setData(key: String, data: Any): Boolean = coroutineScope {
+) : RedisClient {
+    override suspend fun setData(key: String, data: Any): Boolean = coroutineScope {
         redisTemplate.opsForValue()
             .set(key, data)
             .awaitSingle()
     }
 
-    suspend fun setData(key: String, data: Any, durationSeconds: Long): Boolean = coroutineScope {
+    override suspend fun setData(key: String, data: Any, durationSeconds: Long): Boolean = coroutineScope {
         redisTemplate.opsForValue()
             .set(key, data, Duration.ofSeconds(durationSeconds))
             .awaitSingle()
     }
 
-    suspend fun <T : Any> getData(key: String, type: KClass<T>): T? = coroutineScope {
+    override suspend fun <T : Any> getData(key: String, type: KClass<T>): T? = coroutineScope {
         redisTemplate.opsForValue()
             .get(key)
             .awaitSingleOrNull() as T?
     }
-
-    suspend fun deleteData(key: String): Boolean = coroutineScope {
+    
+    override suspend fun deleteData(key: String): Boolean = coroutineScope {
         redisTemplate.opsForValue()
             .delete(key)
             .awaitSingle()
