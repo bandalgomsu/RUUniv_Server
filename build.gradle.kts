@@ -24,6 +24,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -52,6 +54,9 @@ dependencies {
     // Mail
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("commons-validator:commons-validator:1.7")
+
+    //Prometheus
+    implementation("io.micrometer:micrometer-registry-prometheus")
 }
 
 kotlin {

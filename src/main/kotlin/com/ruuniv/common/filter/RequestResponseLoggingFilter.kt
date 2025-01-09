@@ -18,6 +18,7 @@ class RequestResponseLoggingFilter : WebFilter {
         private const val API_KEY_HEADER = "ApiKey"
         private val NOT_LOGGING_END_POINT = listOf(
             "/swagger-ui/",
+            "/actuator/"
         )
     }
 
