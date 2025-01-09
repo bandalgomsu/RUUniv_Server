@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.ruuniv.app.keys.dao.ApiKeyDao
 import com.ruuniv.app.keys.exception.ApiKeyErrorCode
-import com.ruuniv.common.exception.BusinessException
 import com.ruuniv.common.exception.CommonErrorCode
 import com.ruuniv.common.exception.ErrorCode
 import com.ruuniv.common.exception.ErrorResponse
@@ -20,7 +19,7 @@ import reactor.core.publisher.Mono
 import java.nio.charset.StandardCharsets
 
 @Component
-class ApiKeyFilter(
+class ApiKeyAuthenticationFilter(
     private val apiKeyDataAccess: ApiKeyDao,
 ) : WebFilter {
     companion object {
@@ -30,7 +29,7 @@ class ApiKeyFilter(
         )
     }
 
-    private val logger = LoggerFactory.getLogger(ApiKeyFilter::class.java)
+    private val logger = LoggerFactory.getLogger(ApiKeyAuthenticationFilter::class.java)
 
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> {
         val path = exchange.request.uri.path
@@ -39,7 +38,7 @@ class ApiKeyFilter(
         }
 
         val apiKey = exchange.request.headers.getFirst(API_KEY_HEADER)
-        
+
         if (apiKey.isNullOrEmpty()) {
             return setErrorResponse(exchange, CommonErrorCode.INVALID_INPUT_VALUE)
         }
