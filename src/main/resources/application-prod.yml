@@ -23,6 +23,13 @@ management:
       enabled: false
     redis:
       enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: prometheus, health, info
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 logging:
   level:
