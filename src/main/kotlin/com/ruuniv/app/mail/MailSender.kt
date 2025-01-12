@@ -1,7 +1,7 @@
 package com.ruuniv.app.mail
 
 import com.ruuniv.app.mail.dto.MailSenderRequest
-import com.ruuniv.infrastricture.redis.RedisClient
+import com.ruuniv.common.redis.RedisClient
 import jakarta.mail.internet.MimeMessage
 import kotlinx.coroutines.*
 import org.springframework.beans.factory.annotation.Value
