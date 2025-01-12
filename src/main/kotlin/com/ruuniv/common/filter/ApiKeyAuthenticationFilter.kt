@@ -25,7 +25,7 @@ class ApiKeyAuthenticationFilter(
     companion object {
         private const val API_KEY_HEADER = "ApiKey"
         private val END_POINT = listOf(
-            "/api/v1/student/verification",
+            "/api/v1/students",
         )
     }
 
