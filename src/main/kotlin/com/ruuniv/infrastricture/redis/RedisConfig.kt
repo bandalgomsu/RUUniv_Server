@@ -28,13 +28,30 @@ class RedisConfig {
     }
 
     @Bean
-    fun reactiveRedisTemplate(): ReactiveRedisTemplate<String, Any> {
+    fun reactiveRedisAnyTemplate(): ReactiveRedisTemplate<String, Any> {
         val factory = redisConnectionFactory()
         val serializer = Jackson2JsonRedisSerializer(Any::class.java)
         val builder = RedisSerializationContext
             .newSerializationContext<String, Any>(StringRedisSerializer())
         val context = builder.value(serializer).hashValue(serializer)
             .hashKey(serializer).build()
+
+        return ReactiveRedisTemplate(factory, context)
+    }
+
+    @Bean
+    fun reactiveRedisStringTemplate(): ReactiveRedisTemplate<String, String> {
+        val factory = redisConnectionFactory()
+        val serializer = StringRedisSerializer()
+
+        val builder = RedisSerializationContext
+            .newSerializationContext<String, String>(StringRedisSerializer())
+
+        val context = builder
+            .value(serializer)
+            .hashValue(serializer)
+            .hashKey(StringRedisSerializer())  // hashKey에 대해 문자열 serializer 사용
+            .build()
 
         return ReactiveRedisTemplate(factory, context)
     }

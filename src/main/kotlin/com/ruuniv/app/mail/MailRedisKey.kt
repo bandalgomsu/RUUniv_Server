@@ -1,6 +1,6 @@
 package com.ruuniv.app.mail
 
-import com.ruuniv.infrastricture.redis.RedisKey
+import com.ruuniv.common.redis.RedisKey
 
 enum class MailRedisKey(val key: String) : RedisKey {
     SEND_VERIFY_STUDENT_MAIL("SEND_VERIFY_STUDENT_MAIL");
