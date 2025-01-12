@@ -15,7 +15,7 @@ import org.springframework.web.server.ServerWebExchange
 
 @Tag(name = "학생_인증")
 @RestController
-@RequestMapping("/api/v1/student/verification")
+@RequestMapping("/api/v1/students/verification")
 class StudentVerificationController(
     private val studentVerificationService: StudentVerificationService,
 ) {
