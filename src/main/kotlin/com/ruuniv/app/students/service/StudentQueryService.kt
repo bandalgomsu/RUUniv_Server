@@ -14,7 +14,7 @@ class StudentQueryService(
 
     @Caching(
         cacheable = [
-            Cacheable(cacheManager = "redisCacheManager", value = ["STUDENTS_BY_API_KEY"], key = "#apiKeyId"),
+            Cacheable(cacheManager = "redisCacheManager", value = ["STUDENT_CACHE"], key = "#apiKeyId"),
         ]
     )
     suspend fun getStudentsByApiKeyId(apiKeyId: Long): StudentQueryResponse.StudentsInfo = coroutineScope {

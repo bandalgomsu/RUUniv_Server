@@ -16,7 +16,7 @@ class ApiKeyCommandService(
     @Transactional
     @Caching(
         evict = [
-            CacheEvict(cacheManager = "redisCacheManager", value = ["API_KEY"], key = "#userId"),
+            CacheEvict(cacheManager = "redisCacheManager", value = ["API_KEY_CACHE"], key = "#userId"),
         ]
     )
     suspend fun createApiKey(apiKey: String = UUIDGenerator.generateUUID(), userId: Long) = coroutineScope {
@@ -26,7 +26,7 @@ class ApiKeyCommandService(
     @Transactional
     @Caching(
         evict = [
-            CacheEvict(cacheManager = "redisCacheManager", value = ["API_KEY"], key = "#userId"),
+            CacheEvict(cacheManager = "redisCacheManager", value = ["API_KEY_CACHE"], key = "#userId"),
         ]
     )
     suspend fun deleteApiKey(apiKeyId: Long, userId: Long) = coroutineScope {

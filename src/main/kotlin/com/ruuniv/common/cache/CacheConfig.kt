@@ -20,7 +20,16 @@ class CacheConfig {
 
     @Bean("redisCacheManager")
     fun redisCacheManager(redisConnectionFactory: RedisConnectionFactory): RedisCacheManager {
-        val redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+        val apiKeyCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
+            .entryTtl(Duration.ofSeconds(REDIS_CACHE_EXPIRE_SECOND))  // 캐시 TTL 설정
+            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
+            .serializeValuesWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(
+                    GenericJackson2JsonRedisSerializer()
+                )
+            )
+
+        val studentCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
             .entryTtl(Duration.ofSeconds(REDIS_CACHE_EXPIRE_SECOND))  // 캐시 TTL 설정
             .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
             .serializeValuesWith(
@@ -30,7 +39,8 @@ class CacheConfig {
             )
 
         return RedisCacheManager.builder(redisConnectionFactory)
-            .cacheDefaults(redisCacheConfiguration)
+            .withCacheConfiguration("API_KEY_CACHE", apiKeyCacheConfiguration)
+            .withCacheConfiguration("STUDENT_CACHE", studentCacheConfiguration)
             .build()
     }
 
