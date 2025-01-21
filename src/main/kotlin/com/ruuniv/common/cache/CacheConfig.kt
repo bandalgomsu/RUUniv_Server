@@ -14,34 +14,24 @@ import java.time.Duration
 @Configuration
 @EnableCaching
 class CacheConfig {
-    companion object {
-        private const val REDIS_CACHE_EXPIRE_SECOND = 60 * 60L // 60m
-    }
-
     @Bean("redisCacheManager")
     fun redisCacheManager(redisConnectionFactory: RedisConnectionFactory): RedisCacheManager {
-        val apiKeyCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(Duration.ofSeconds(REDIS_CACHE_EXPIRE_SECOND))  // 캐시 TTL 설정
-            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
-            .serializeValuesWith(
-                RedisSerializationContext.SerializationPair.fromSerializer(
-                    GenericJackson2JsonRedisSerializer()
-                )
-            )
+        val redisCacheManager = RedisCacheManager.builder(redisConnectionFactory)
 
-        val studentCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(Duration.ofSeconds(REDIS_CACHE_EXPIRE_SECOND))  // 캐시 TTL 설정
-            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
-            .serializeValuesWith(
-                RedisSerializationContext.SerializationPair.fromSerializer(
-                    GenericJackson2JsonRedisSerializer()
+        CacheType.entries.forEach {
+            val config = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofSeconds(it.expireAfterWrite))  // 캐시 TTL 설정
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer()))
+                .serializeValuesWith(
+                    RedisSerializationContext.SerializationPair.fromSerializer(
+                        GenericJackson2JsonRedisSerializer()
+                    )
                 )
-            )
 
-        return RedisCacheManager.builder(redisConnectionFactory)
-            .withCacheConfiguration("API_KEY_CACHE", apiKeyCacheConfiguration)
-            .withCacheConfiguration("STUDENT_CACHE", studentCacheConfiguration)
-            .build()
+            redisCacheManager
+                .withCacheConfiguration(it.cacheName, config)
+        }
+
+        return redisCacheManager.build()
     }
-
 }
