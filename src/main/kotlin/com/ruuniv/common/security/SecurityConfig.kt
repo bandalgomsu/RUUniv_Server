@@ -19,6 +19,8 @@ import org.springframework.security.web.server.authentication.AuthenticationWebF
 import org.springframework.security.web.server.authentication.ServerAuthenticationConverter
 import org.springframework.security.web.server.authentication.ServerAuthenticationEntryPointFailureHandler
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebFluxSecurity
@@ -26,6 +28,12 @@ class SecurityConfig(
     private val jwtService: JwtService,
     private val userDetailService: UserDetailService
 ) {
+    companion object {
+        private val corsList = listOf(
+            "http://localhost:3000",
+            "https://ruuniv.xyz",
+        )
+    }
 
     @Bean
     fun filterChain(
@@ -43,6 +51,20 @@ class SecurityConfig(
             .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
             .sessionManagement { it.ConcurrentSessionsSpec() }
             .headers { it.frameOptions { it.disable() } }
+            .cors {
+                it.configurationSource {
+                    val configuration = CorsConfiguration().apply {
+                        allowedOrigins = corsList
+                        allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        allowedHeaders = listOf("*")
+                        allowCredentials = true
+                    }
+                    val source = UrlBasedCorsConfigurationSource()
+                    source.registerCorsConfiguration("/**", configuration)
+
+                    return@configurationSource configuration
+                }
+            }
             .authorizeExchange {
                 it.pathMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
                 it.pathMatchers(HttpMethod.GET, "/swagger-ui.html/**").permitAll()
