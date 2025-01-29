@@ -1,8 +1,11 @@
 package com.ruuniv.common.cache
 
 import com.github.benmanes.caffeine.cache.Caffeine
+import org.springframework.cache.annotation.AnnotationCacheOperationSource
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.caffeine.CaffeineCacheManager
+import org.springframework.cache.interceptor.CacheInterceptor
+import org.springframework.cache.interceptor.CacheOperationSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -51,5 +54,19 @@ class CacheConfig {
         }
 
         return caffeineCacheManager
+    }
+
+    @Bean
+    fun cacheInterceptor(): CacheInterceptor {
+        val interceptor = CustomCacheInterceptor(caffeineCacheManager())
+
+        interceptor.setCacheOperationSources(cacheOperationSource())
+
+        return interceptor
+    }
+
+    @Bean
+    fun cacheOperationSource(): CacheOperationSource {
+        return AnnotationCacheOperationSource()
     }
 }
