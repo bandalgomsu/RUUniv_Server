@@ -1,14 +1,14 @@
 package com.ruuniv.app.students.dto
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import java.io.Serializable
 
 class StudentQueryResponse {
     data class StudentsInfo(
-        @JsonProperty("studentsInfo") val studentsInfo: List<StudentInfo> = emptyList()
-    )
+        val studentsInfo: List<StudentInfo> = emptyList()
+    ) : Serializable
 
     data class StudentInfo(
-        @JsonProperty("studentId") val studentId: Long,
-        @JsonProperty("studentEmail") val studentEmail: String,
-    )
+        val studentId: Long,
+        val studentEmail: String,
+    ) : Serializable
 }

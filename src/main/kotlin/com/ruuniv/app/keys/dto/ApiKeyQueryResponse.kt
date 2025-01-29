@@ -1,14 +1,14 @@
 package com.ruuniv.app.keys.dto
 
-import com.fasterxml.jackson.annotation.JsonProperty
+import java.io.Serializable
 
 class ApiKeyQueryResponse {
     data class ApiKeysInfo(
-        @JsonProperty("apiKeys") val apiKeys: List<ApiKeyInfo>
-    )
+        val apiKeys: List<ApiKeyInfo>
+    ) : Serializable
 
     data class ApiKeyInfo(
-        @JsonProperty("apiKeyId") val apiKeyId: Long,
-        @JsonProperty("apiKey") val apiKey: String,
-    )
+        val apiKeyId: Long,
+        val apiKey: String,
+    ) : Serializable
 }
