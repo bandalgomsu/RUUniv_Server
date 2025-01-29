@@ -14,6 +14,7 @@ class StudentQueryService(
 
     @Caching(
         cacheable = [
+            Cacheable(cacheManager = "caffeineCacheManager", value = ["STUDENT_CACHE"], key = "#apiKeyId"),
             Cacheable(cacheManager = "redisCacheManager", value = ["STUDENT_CACHE"], key = "#apiKeyId"),
         ]
     )

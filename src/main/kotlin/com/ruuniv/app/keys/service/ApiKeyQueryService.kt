@@ -14,6 +14,7 @@ class ApiKeyQueryService(
 
     @Caching(
         cacheable = [
+            Cacheable(cacheManager = "caffeineCacheManager", value = ["API_KEY_CACHE"], key = "#userId"),
             Cacheable(cacheManager = "redisCacheManager", value = ["API_KEY_CACHE"], key = "#userId"),
         ]
     )
