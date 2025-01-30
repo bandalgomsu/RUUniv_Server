@@ -36,6 +36,7 @@ class StudentVerificationService(
     @Transactional
     @Caching(
         evict = [
+            CacheEvict(cacheManager = "caffeineCacheManager", value = ["STUDENT_CACHE"], key = "#apiKeyId"),
             CacheEvict(cacheManager = "redisCacheManager", value = ["STUDENT_CACHE"], key = "#apiKeyId"),
         ]
     )

@@ -16,6 +16,7 @@ class ApiKeyCommandService(
     @Transactional
     @Caching(
         evict = [
+            CacheEvict(cacheManager = "caffeineCacheManager", value = ["API_KEY_CACHE"], key = "#userId"),
             CacheEvict(cacheManager = "redisCacheManager", value = ["API_KEY_CACHE"], key = "#userId"),
         ]
     )
@@ -26,6 +27,7 @@ class ApiKeyCommandService(
     @Transactional
     @Caching(
         evict = [
+            CacheEvict(cacheManager = "caffeineCacheManager", value = ["API_KEY_CACHE"], key = "#userId"),
             CacheEvict(cacheManager = "redisCacheManager", value = ["API_KEY_CACHE"], key = "#userId"),
         ]
     )

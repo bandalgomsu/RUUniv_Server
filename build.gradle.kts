@@ -57,6 +57,9 @@ dependencies {
 
     //Prometheus
     implementation("io.micrometer:micrometer-registry-prometheus")
+
+    //Caffein
+    implementation("com.github.ben-manes.caffeine:caffeine:3.2.0")
 }
 
 kotlin {

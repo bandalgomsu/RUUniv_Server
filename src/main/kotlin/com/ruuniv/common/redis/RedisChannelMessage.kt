@@ -1,4 +1,14 @@
 package com.ruuniv.common.redis
 
-class RedisChannelMessage {
+import java.io.Serializable
+
+open class RedisChannelMessage : Serializable {
+    data class CacheSyncMessage(
+        val cacheName: String,
+        val key: Any,
+        val cacheValue: Any,
+        val cacheValueClass: Class<*>
+    ) : RedisChannelMessage(), Serializable {
+
+    }
 }
