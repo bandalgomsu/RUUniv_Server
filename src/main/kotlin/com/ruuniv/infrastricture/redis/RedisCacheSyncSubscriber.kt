@@ -57,7 +57,5 @@ class RedisCacheSyncSubscriber(
         val caffeineCache: Cache = caffeineCacheManager.getCache(cacheName) ?: return
 
         caffeineCache.put(key.toString(), objectMapper.convertValue(existingCacheValue, cacheValueClass))
-        log.info("SYNC : {}", caffeineCache.get(key.toString()))
-        log.info("CLASS {}", existingCacheValue.javaClass)
     }
 }
