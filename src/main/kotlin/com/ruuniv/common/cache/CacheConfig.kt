@@ -1,6 +1,8 @@
 package com.ruuniv.common.cache
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.benmanes.caffeine.cache.Caffeine
+import com.ruuniv.common.redis.RedisPublisher
 import org.springframework.cache.annotation.AnnotationCacheOperationSource
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.caffeine.CaffeineCacheManager
@@ -19,7 +21,10 @@ import java.time.Duration
 
 @Configuration
 @EnableCaching
-class CacheConfig {
+class CacheConfig(
+    private val redisPublisher: RedisPublisher,
+    private val objectMapper: ObjectMapper,
+) {
     @Bean("redisCacheManager")
     fun redisCacheManager(redisConnectionFactory: RedisConnectionFactory): RedisCacheManager {
         val cacheConfigurations = CacheType.entries.associate { cacheType ->
@@ -43,6 +48,8 @@ class CacheConfig {
     fun caffeineCacheManager(): CaffeineCacheManager {
         val caffeineCacheManager = CaffeineCacheManager()
 
+        caffeineCacheManager.isAllowNullValues = true
+
         CacheType.entries.forEach {
             val caffeineCache = Caffeine.newBuilder()
                 .expireAfterWrite(Duration.ofSeconds(it.expireAfterWrite))
@@ -56,9 +63,10 @@ class CacheConfig {
         return caffeineCacheManager
     }
 
+
     @Bean
     fun cacheInterceptor(): CacheInterceptor {
-        val interceptor = CustomCacheInterceptor(caffeineCacheManager())
+        val interceptor = CustomCacheInterceptor(caffeineCacheManager(), redisPublisher)
 
         interceptor.setCacheOperationSources(cacheOperationSource())
 
