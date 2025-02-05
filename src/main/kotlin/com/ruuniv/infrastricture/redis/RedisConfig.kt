@@ -1,5 +1,9 @@
 package com.ruuniv.infrastricture.redis
 
+import io.lettuce.core.event.EventBus
+import io.lettuce.core.event.connection.ConnectedEvent
+import io.lettuce.core.event.connection.DisconnectedEvent
+import io.lettuce.core.resource.ClientResources
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
@@ -7,6 +11,7 @@ import org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfig
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.data.redis.core.ReactiveRedisTemplate
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
@@ -23,8 +28,16 @@ class RedisConfig {
     private val port = 0
 
     @Bean
+    fun clientResources(): ClientResources {
+        return ClientResources.create()
+    }
+
+    @Bean
     fun redisConnectionFactory(): ReactiveRedisConnectionFactory {
-        return LettuceConnectionFactory(host!!, port)
+        return LettuceConnectionFactory(
+            LettuceConnectionFactory.createRedisConfiguration("redis://$host:$port"),
+            LettuceClientConfiguration.builder().clientResources(clientResources()).build()
+        )
     }
 
     @Bean
@@ -54,5 +67,22 @@ class RedisConfig {
             .build()
 
         return ReactiveRedisTemplate(factory, context)
+    }
+
+    private fun monitorRedisEvents(factory: LettuceConnectionFactory) {
+        val eventBus: EventBus = factory.clientResources!!.eventBus()
+        eventBus
+            .get()
+            .subscribe {
+                when (it) {
+                    is ConnectedEvent -> {
+                        println("a")
+                    }
+
+                    is DisconnectedEvent -> {
+                        println("a")
+                    }
+                }
+            }
     }
 }
