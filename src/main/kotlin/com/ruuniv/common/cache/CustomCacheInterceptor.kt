@@ -12,11 +12,16 @@ import org.springframework.data.redis.cache.RedisCache
 class CustomCacheInterceptor(
     private val caffeineCacheManager: CaffeineCacheManager,
     private val redisPublisher: RedisPublisher,
+    private val redisCacheEnableState: RedisCacheEnableState
 ) : CacheInterceptor() {
 
     private var log = LoggerFactory.getLogger(CustomCacheInterceptor::class.java)
 
     override fun doGet(cache: Cache, key: Any): Cache.ValueWrapper? {
+        if (!redisCacheEnableState.isRedisCacheEnable) {
+            return null
+        }
+
         val existingCacheValue = super.doGet(cache, key.toString())
 
         if (existingCacheValue != null && cache is RedisCache) {
