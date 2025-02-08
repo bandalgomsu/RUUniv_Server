@@ -10,6 +10,6 @@ class EndPointEntity(
     @Id
     var id: Long? = null,
     @Column("end_point")
-    var endPoint: String
+    var endPoint: String //Unique
 ) : BaseEntity() {
 }

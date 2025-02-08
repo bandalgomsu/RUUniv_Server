@@ -1,4 +1,4 @@
-package com.ruuniv.app.endpoint
+package com.ruuniv.app.endpoint.model
 
 import java.time.LocalDateTime
 

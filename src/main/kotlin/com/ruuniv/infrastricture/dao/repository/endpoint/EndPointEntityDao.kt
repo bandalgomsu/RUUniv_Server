@@ -1,7 +1,7 @@
 package com.ruuniv.infrastricture.dao.repository.endpoint
 
-import com.ruuniv.app.endpoint.EndPoint
-import com.ruuniv.app.endpoint.EndPointDao
+import com.ruuniv.app.endpoint.dao.EndPointDao
+import com.ruuniv.app.endpoint.model.EndPoint
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
@@ -23,12 +23,25 @@ class EndPointEntityDao(
         }.toList()
     }
 
-    override suspend fun add(endPoint: EndPoint) {
+    override suspend fun add(endPoint: EndPoint): Unit = coroutineScope {
         repository.save(
             EndPointEntity(
                 id = endPoint.id,
                 endPoint = endPoint.endPoint
             )
         )
+    }
+
+    override suspend fun delete(endPoint: EndPoint): Unit = coroutineScope {
+        repository.delete(
+            EndPointEntity(
+                id = endPoint.id,
+                endPoint = endPoint.endPoint,
+            )
+        )
+    }
+
+    override suspend fun delete(endPoint: String) {
+        repository.deleteByEndPoint(endPoint)
     }
 }
