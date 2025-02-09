@@ -2,12 +2,11 @@ package com.ruuniv.app.endpoint.service
 
 import com.ruuniv.app.endpoint.implement.EndPointWriter
 import com.ruuniv.app.endpoint.implement.SelfEndPointStorage
+import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
 import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.ApplicationRunner
-import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service
 import java.net.InetAddress
 import java.net.URL
@@ -23,28 +22,26 @@ class EndPointInitializeService(
     @Value("\${server.port}")
     private val port: String,
 ) {
-
     private val log = LoggerFactory.getLogger(EndPointInitializeService::class.java)
 
-    @Bean
-    fun initializeEndPoint(): ApplicationRunner {
-        return ApplicationRunner {
-            runBlocking {
-                val ip = try {
-                    URL("http://169.254.169.254/latest/meta-data/local-ipv4")
-                        .readText()
-                        .trim()
-                } catch (e: Exception) {
-                    InetAddress.getLocalHost().hostAddress
-                }
-
-                val endPoint = "$ip:$port"
-
-                endPointWriter.add(endPoint)
-                selfEndPointStorage.selfEndPoint = endPoint
-                log.info("SELF_END_POINT : {}", selfEndPointStorage.selfEndPoint)
+    @PostConstruct
+    fun initializeEndPoint1() {
+        runBlocking {
+            val ip = try {
+                URL("http://169.254.169.254/latest/meta-data/local-ipv4")
+                    .readText()
+                    .trim()
+            } catch (e: Exception) {
+                InetAddress.getLocalHost().hostAddress
             }
+
+            val endPoint = "$ip:$port"
+
+            endPointWriter.add(endPoint)
+            selfEndPointStorage.selfEndPoint = endPoint
+            log.info("SELF_END_POINT : {}", selfEndPointStorage.selfEndPoint)
         }
+
     }
 
     @PreDestroy

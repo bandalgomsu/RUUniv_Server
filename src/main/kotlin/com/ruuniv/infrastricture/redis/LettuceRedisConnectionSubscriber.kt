@@ -1,6 +1,6 @@
 package com.ruuniv.infrastricture.redis
 
-import com.ruuniv.common.cache.RedisCacheEnableState
+import com.ruuniv.common.cache.component.RedisCacheEnableState
 import io.lettuce.core.event.connection.ConnectedEvent
 import io.lettuce.core.event.connection.DisconnectedEvent
 import jakarta.annotation.PostConstruct

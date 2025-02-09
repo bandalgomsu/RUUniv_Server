@@ -72,6 +72,7 @@ class SecurityConfig(
                 it.pathMatchers(HttpMethod.POST, "/api/v1/students/**").permitAll()
                 it.pathMatchers(HttpMethod.GET, "/api/v1/students/**").permitAll()
                 it.pathMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+                it.pathMatchers(HttpMethod.DELETE, "/api/v1/cache/**").permitAll()
                 it.pathMatchers(HttpMethod.GET, "/health").permitAll()
                 it.anyExchange().authenticated()
             }

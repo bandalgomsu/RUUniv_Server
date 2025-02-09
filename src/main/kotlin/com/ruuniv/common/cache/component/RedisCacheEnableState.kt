@@ -1,4 +1,4 @@
-package com.ruuniv.common.cache
+package com.ruuniv.common.cache.component
 
 import org.springframework.stereotype.Component
 
