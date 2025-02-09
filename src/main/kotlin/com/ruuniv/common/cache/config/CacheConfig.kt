@@ -1,7 +1,11 @@
-package com.ruuniv.common.cache
+package com.ruuniv.common.cache.config
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.benmanes.caffeine.cache.Caffeine
+import com.ruuniv.app.endpoint.implement.EndPointReader
+import com.ruuniv.app.endpoint.implement.SelfEndPointStorage
+import com.ruuniv.common.cache.component.CustomCacheInterceptor
+import com.ruuniv.common.cache.component.RedisCacheEnableState
+import com.ruuniv.common.cache.model.CacheType
 import com.ruuniv.common.redis.RedisPublisher
 import org.springframework.cache.annotation.AnnotationCacheOperationSource
 import org.springframework.cache.annotation.EnableCaching
@@ -23,7 +27,9 @@ import java.time.Duration
 @EnableCaching
 class CacheConfig(
     private val redisPublisher: RedisPublisher,
-    private val objectMapper: ObjectMapper,
+    private val redisCacheEnableState: RedisCacheEnableState,
+    private val endPointReader: EndPointReader,
+    private val selfEndPointStorage: SelfEndPointStorage,
 ) {
     @Bean("redisCacheManager")
     fun redisCacheManager(redisConnectionFactory: RedisConnectionFactory): RedisCacheManager {
@@ -66,7 +72,13 @@ class CacheConfig(
 
     @Bean
     fun cacheInterceptor(): CacheInterceptor {
-        val interceptor = CustomCacheInterceptor(caffeineCacheManager(), redisPublisher)
+        val interceptor = CustomCacheInterceptor(
+            caffeineCacheManager(),
+            redisPublisher,
+            redisCacheEnableState,
+            endPointReader,
+            selfEndPointStorage
+        )
 
         interceptor.setCacheOperationSources(cacheOperationSource())
 

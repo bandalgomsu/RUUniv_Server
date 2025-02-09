@@ -26,3 +26,11 @@ CREATE TABLE IF NOT EXISTS api_key(
     updated_at timestamp(6) ,
     primary key (id)
 );
+
+CREATE TABLE IF NOT EXISTS end_point(
+    id bigint not null AUTO_INCREMENT ,
+    end_point varchar(255) not null unique ,
+    created_at timestamp(6) ,
+    updated_at timestamp(6) ,
+    primary key (id)
+);

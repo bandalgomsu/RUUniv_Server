@@ -1,4 +1,4 @@
-package com.ruuniv.common.cache
+package com.ruuniv.common.cache.model
 
 enum class CacheType(
     val cacheName: String,
