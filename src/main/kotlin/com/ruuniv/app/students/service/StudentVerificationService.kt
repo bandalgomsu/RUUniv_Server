@@ -36,7 +36,8 @@ class StudentVerificationService(
     @Transactional
     @Caching(
         evict = [
-            CacheEvict(cacheManager = "redisCacheManager", value = ["STUDENTS_BY_API_KEY"], key = "#apiKeyId"),
+            CacheEvict(cacheManager = "caffeineCacheManager", value = ["STUDENT_CACHE"], key = "#apiKeyId"),
+            CacheEvict(cacheManager = "redisCacheManager", value = ["STUDENT_CACHE"], key = "#apiKeyId"),
         ]
     )
     suspend fun verifyStudentVerificationAuthNumber(

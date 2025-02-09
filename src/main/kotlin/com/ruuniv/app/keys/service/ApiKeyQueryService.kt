@@ -14,7 +14,8 @@ class ApiKeyQueryService(
 
     @Caching(
         cacheable = [
-            Cacheable(cacheManager = "redisCacheManager", value = ["API_KEY"], key = "#userId"),
+            Cacheable(cacheManager = "caffeineCacheManager", value = ["API_KEY_CACHE"], key = "#userId"),
+            Cacheable(cacheManager = "redisCacheManager", value = ["API_KEY_CACHE"], key = "#userId"),
         ]
     )
     suspend fun getApiKeysByUserId(userId: Long): ApiKeyQueryResponse.ApiKeysInfo = coroutineScope {
