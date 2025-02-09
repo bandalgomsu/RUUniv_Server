@@ -32,6 +32,7 @@ class EndPointInitializeService(
                     .readText()
                     .trim()
             } catch (e: Exception) {
+                log.error(e.message)
                 InetAddress.getLocalHost().hostAddress
             }
 
